@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import Coaches from './Coaches';
 import { Link } from 'react-router-dom';
 import Nav2 from '../Nav2';
-import { dataService } from '../../public/data/dataService';
+import { dataService } from '../data/dataService';
 
 export default function Home() {
   const [offers, setOffers] = useState([]);
