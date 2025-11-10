@@ -1,14 +1,20 @@
-// الحل: نقرأ من JSON مباشرة بدون cache
+// الحل: نقرأ من JSON مباشرة من public folder
 class DataService {
   constructor() {
-    // نحمل البيانات كل مرة من fetch
-    this.dataUrl = '../public/data/data.json';
+    // الملف موجود في public/data/data.json
+    // Vercel هيقدر يوصله من /data/data.json
+    this.dataUrl = '/data/data.json';
   }
 
   async loadData() {
     try {
-      // fetch يقرأ الملف مباشرة بدون cache
+      // fetch يقرأ الملف مباشرة من public folder
       const response = await fetch(this.dataUrl + '?t=' + Date.now());
+      
+      if (!response.ok) {
+        throw new Error(`HTTP error! status: ${response.status}`);
+      }
+      
       const data = await response.json();
       return data;
     } catch (error) {
