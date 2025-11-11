@@ -67,35 +67,35 @@
     {
       "id": 1,
       "name": "Zema",
-      "img": "/coaches/zema.jpg",
+      "img": "/coaches/1.jpg",
       "title": "Fitness Manager",
       "link": "https://instagram.com/coach1"
     },
     {
       "id": 2,
       "name": "Ali",
-      "img": "/coaches/ali.jpg",
+      "img": "/coaches/1.jpg",
       "title": "Coach",
       "link": "https://instagram.com/coach2"
     },
     {
       "id": 3,
       "name": "Mohamed",
-      "img": "/coaches/mohamed.jpg",
+      "img": "/coaches/1.jpg",
       "title": "Coach",
       "link": "https://instagram.com/coach3"
     },
     {
       "id": 4,
       "name": "Bogy",
-      "img": "/coaches/bogy.jpg",
+      "img": "/coaches/1.jpg",
       "title": "Coach",
       "link": "https://instagram.com/coach3"
     },
     {
       "id": 5,
       "name": "Saif",
-      "img": "/coaches/saif.jpg",
+      "img": "/coaches/1.jpg",
       "title": "Coach",
       "link": "https://instagram.com/coach3"
     }
