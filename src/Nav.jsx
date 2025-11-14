@@ -120,7 +120,7 @@ export default function Nav() {
               />
             </Link>
 
-            {/* Mobile Menu Button */}
+            {/* Mobile Menu Button
             <div className="flex items-center gap-4 lg:hidden">
               <Link to={"/shop"}>
                 <motion.i 
@@ -155,7 +155,7 @@ export default function Nav() {
                   />
                 )}
               </motion.button>
-            </div>
+            </div> */}
 
             {/* Desktop Navigation */}
             {/* <nav className="hidden lg:flex items-center gap-8">

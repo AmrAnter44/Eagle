@@ -200,20 +200,7 @@ export default function Home() {
                             <i className='fa-solid fa-check text-red-600 text-xl'></i>
                             <span>{offer.invite} Invitations</span>
                           </motion.li>
-                          <motion.li 
-                            className='flex items-center gap-3 font-semibold text-lg'
-                            whileHover={{ x: 5 }}
-                          >
-                            <i className='fa-solid fa-check text-red-600 text-xl'></i>
-                            <span>ALL Classes</span>
-                          </motion.li>
-                          <motion.li 
-                            className='flex items-center gap-3 font-semibold text-lg'
-                            whileHover={{ x: 5 }}
-                          >
-                            <i className='fa-solid fa-check text-red-600 text-xl'></i>
-                            <span>SPA Access</span>
-                          </motion.li>
+
                         </ul>
 
                         {/* Book Button */}
