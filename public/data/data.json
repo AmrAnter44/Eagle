@@ -68,43 +68,37 @@
       "id": 1,
       "name": "mostafa",
       "img": "/coaches/mostafa.png",
-      "title": "General manager",
-      "link": "https://instagram.com/coach1"
+      "title": "General manager"
     },
     {
       "id": 2,
       "name": "AbdElrhman",
       "img": "/coaches/abdelrhmanf.png",
-      "title": "Fitness manger",
-      "link": "https://instagram.com/coach2"
+      "title": "Fitness manger"
     },
     {
       "id": 3,
       "name": "Amr",
       "img": "/coaches/amr.png",
-      "title": "Senior trainer",
-      "link": "https://instagram.com/coach3"
+      "title": "Senior trainer"
     },
     {
       "id": 4,
       "name": "Ibrahim",
       "img": "/coaches/ibrahim.png",
-      "title": "Personal trainer",
-      "link": "https://instagram.com/coach3"
+      "title": "Personal trainer"
     },
     {
       "id": 5,
       "name": "Norhan",
       "img": "/coaches/norhan.png",
-      "title": "Personal trainer",
-      "link": "https://instagram.com/coach3"
+      "title": "Personal trainer"
     },
     {
       "id": 6,
       "name": "Abdelrhman",
       "img": "/coaches/abdelrhman.png",
-      "title": "Personal trainer",
-      "link": "https://instagram.com/coach3"
+      "title": "Personal trainer"
     }
   ],
   "classes": [
