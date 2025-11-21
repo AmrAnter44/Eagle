@@ -12,8 +12,6 @@ export default function Trans() {
     "/trans/6.png",
     "/trans/7.png",
     "/trans/8.png",
-    "/trans/9.png",
-    "/trans/10.png",
   ];
 
   // Auto slide كل 3 ثواني

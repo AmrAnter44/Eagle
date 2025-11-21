@@ -4,7 +4,7 @@ import Coaches from './Coaches';
 import { Link } from 'react-router-dom';
 import Nav2 from '../Nav2';
 import { dataService } from '../data/dataService';
-
+import BlackFridayOffer from './BlackFridayOffer'; // حط المسار الصح
 export default function Home() {
   const [offers, setOffers] = useState([]);
   const [ptPackages, setPtPackages] = useState([]);
@@ -79,7 +79,7 @@ export default function Home() {
       <Nav2 />
 
       <div className="min-h-screen">
-        
+            <BlackFridayOffer />
         {/* ==================== Membership Offers Section ==================== */}
         <motion.div 
           className='w-full py-16 bg-gradient-to-b from-black via-red-950/20 to-black'
