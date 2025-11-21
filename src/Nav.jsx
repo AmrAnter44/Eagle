@@ -139,7 +139,7 @@ export default function Nav() {
 
             {/* Desktop Navigation */}
             <nav className="hidden lg:flex items-center gap-8">
-              <Link to="/">
+              {/* <Link to="/">
                 <motion.span
                   className="text-white font-bold text-lg gymfont relative group cursor-pointer"
                   variants={linkVariants}
@@ -149,31 +149,9 @@ export default function Nav() {
                   HOME
                   <span className="absolute -bottom-1 left-0 w-0 h-0.5 bg-red-600 group-hover:w-full transition-all duration-300"></span>
                 </motion.span>
-              </Link>
+              </Link> */}
 
-              <Link to="/coaches">
-                <motion.span
-                  className="text-white font-bold text-lg gymfont relative group cursor-pointer"
-                  variants={linkVariants}
-                  initial="rest"
-                  whileHover="hover"
-                >
-                  COACHES
-                  <span className="absolute -bottom-1 left-0 w-0 h-0.5 bg-red-600 group-hover:w-full transition-all duration-300"></span>
-                </motion.span>
-              </Link>
 
-              <Link to="/transformations">
-                <motion.span
-                  className="text-white font-bold text-lg gymfont relative group cursor-pointer"
-                  variants={linkVariants}
-                  initial="rest"
-                  whileHover="hover"
-                >
-                  TRANSFORMATIONS
-                  <span className="absolute -bottom-1 left-0 w-0 h-0.5 bg-red-600 group-hover:w-full transition-all duration-300"></span>
-                </motion.span>
-              </Link>
             </nav>
 
           </div>
@@ -202,31 +180,6 @@ export default function Nav() {
                 </motion.div>
               </Link>
 
-              <Link
-                to="/coaches"
-                onClick={() => setOpen(false)}
-              >
-                <motion.div
-                  className="text-white font-bold text-lg gymfont px-4 py-3 rounded-lg hover:bg-red-600/20 transition-all"
-                  whileHover={{ x: 10, backgroundColor: "rgba(220, 38, 38, 0.2)" }}
-                  whileTap={{ scale: 0.98 }}
-                >
-                  COACHES
-                </motion.div>
-              </Link>
-
-              <Link
-                to="/transformations"
-                onClick={() => setOpen(false)}
-              >
-                <motion.div
-                  className="text-white font-bold text-lg gymfont px-4 py-3 rounded-lg hover:bg-red-600/20 transition-all"
-                  whileHover={{ x: 10, backgroundColor: "rgba(220, 38, 38, 0.2)" }}
-                  whileTap={{ scale: 0.98 }}
-                >
-                  TRANSFORMATIONS
-                </motion.div>
-              </Link>
             </nav>
           </motion.div>
         </div>

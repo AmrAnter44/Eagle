@@ -17,7 +17,7 @@ import Caples from './comp/Map/Cables';
 import Machines from './comp/Map/Machines';
 import Bar from './comp/Map/Bar';
 import Map from './comp/Map';
-import Gold from './comp/vip/Gold';
+
 import Shop from './comp/Shop';
 import { Analytics } from "@vercel/analytics/react"
 
@@ -42,7 +42,7 @@ function App() {
         { path: "/Caples", element: <Caples /> },
         { path: "/Machines", element: <Machines /> },
         { path: "/Bar", element: <Bar /> },
-        { path: "/gold", element: <Gold/> },
+
         { path: "/shop", element: <Shop/> },
         // ✅ شلنا Admin routes
       ],
