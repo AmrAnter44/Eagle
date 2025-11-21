@@ -193,6 +193,25 @@ export default function Home() {
                             <i className='fa-solid fa-check text-red-600 text-xl'></i>
                             <span>{offer.invite} Invitations</span>
                           </motion.li>
+{offer.freezing && offer.freezing !== "" && offer.freezing !== 0 && (
+  <motion.li 
+    className="flex items-center gap-3 font-semibold text-lg"
+    whileHover={{ x: 5 }}
+  >
+    <i className="fa-solid fa-check text-red-600 text-xl"></i>
+    <span>{offer.freezing} Freezing</span>
+  </motion.li>
+)}
+
+
+
+                          <motion.li 
+                            className='flex items-center gap-3 font-semibold text-lg'
+                            whileHover={{ x: 5 }}
+                          >
+                            <i className='fa-solid fa-check text-red-600 text-xl'></i>
+                            <span>{offer.nutrition} Nutrition Session</span>
+                          </motion.li>
 
                         </ul>
 

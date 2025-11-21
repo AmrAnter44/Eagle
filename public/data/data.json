@@ -3,38 +3,42 @@
     {
       "id": 1,
       "duration": "1 Month",
-      "price": "800",
-      "price_new": "0",
-      "private": "2",
-      "inbody": "1",
-      "invite": "1"
+      "price": "1000",
+      "price_new": "800",
+      "private": "1",
+      "invite": "2",
+       "freezing": "",
+       "nutrition":""
     },
     {
       "id": 2,
-      "duration": "2 Months",
-      "price": "1600",
-      "price_new": "1000",
+      "duration": "3 Months",
+      "price": "2000",
+      "price_new": "1800",
       "private": "2",
-      "inbody": "2",
-      "invite": "2"
+      "invite": "6",
+      "freezing": "2 Weeks",
+       "nutrition":"1"
     },
     {
       "id": 3,
       "duration": "6 Months",
-      "price": "2800",
-      "price_new": "2000",
-      "private": "6",
-      "inbody": "6",
-      "invite": "6"
+      "price": "3500",
+      "price_new": "2800",
+      "private": "3",
+      "invite": "10",
+      "freezing": "1 Months",
+      "nutrition":"2"
     },
     {
       "id": 4,
       "duration": "12 Months",
-      "price": "4500",
-      "price_new": "0",
-      "private": "12",
-      "inbody": "12",
-      "invite": "12"
+      "price": "5000",
+      "price_new": "3500",
+      "private": "4",
+      "invite": "12",
+     "freezing": "2 Months",
+      "nutrition":"4"
     }
   ],
   "pt_packages": [
