@@ -92,7 +92,7 @@ export default function Coaches() {
 
           {/* قسم التحولات */}
           <div className="w-full lg:w-1/2">
-            {/* <Trans /> */}
+            <Trans />
           </div>
 
         </div>

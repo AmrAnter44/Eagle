@@ -243,45 +243,12 @@ export default function Home() {
           </p>
         </motion.div>
 
-        {/* ==================== Coaches Section ====================
-        <Coaches /> */}
+
+        <Coaches /> 
 
         {/* ==================== Features Section ==================== */}
-        <motion.div 
-          className='flex justify-center gap-8 lg:gap-16 py-16 bg-black'
-          initial="hidden"
-          whileInView="visible"
-          viewport={{ once: true }}
-          variants={containerVariants}
-        >
-          <motion.div 
-            className="glass rounded-2xl p-8 text-center min-w-[200px]"
-            variants={cardVariants}
-            whileHover="hover"
-          >
-            <motion.i 
-              className="fas fa-clock text-5xl text-red-600 mb-4"
-              whileHover={{ scale: 1.2, rotate: 360 }}
-              transition={{ duration: 0.6 }}
-            />
-            <p className="text-white font-bold text-2xl gymfont mb-2">24/7</p>
-            <p className="text-gray-400 text-lg">OPEN</p>
-          </motion.div>
 
-          <motion.div 
-            className="glass rounded-2xl p-8 text-center min-w-[200px]"
-            variants={cardVariants}
-            whileHover="hover"
-          >
-            <motion.i 
-              className="fas fa-wifi text-5xl text-red-600 mb-4"
-              whileHover={{ scale: 1.2 }}
-              transition={{ duration: 0.3 }}
-            />
-            <p className="text-white font-bold text-2xl gymfont mb-2">FREE</p>
-            <p className="text-gray-400 text-lg">WI-FI</p>
-          </motion.div>
-        </motion.div>
+
       </div>
     </>
   );
