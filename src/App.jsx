@@ -10,12 +10,8 @@ import Men from './comp/Map/Men';
 import Ladies from './comp/Map/Ladies';
 import Cardio from './comp/Map/Cardio';
 import Weight from './comp/Map/Weight';
-import Leg from './comp/Map/Leg';
-import Fitness from './comp/Map/Fitness';
-import Spa from './comp/Map/Spa';
-import Caples from './comp/Map/Cables';
+import Free from './comp/Map/Free';
 import Machines from './comp/Map/Machines';
-import Bar from './comp/Map/Bar';
 import Map from './comp/Map';
 
 import Shop from './comp/Shop';
@@ -35,15 +31,10 @@ function App() {
         { path: "/Men", element: <Men /> },
         { path: "/Ladies", element: <Ladies /> },
         { path: "/Cardio", element: <Cardio /> },
+        { path: "/Free", element: <Free /> },
         { path: "/Weight", element: <Weight /> },
-        { path: "/Leg", element: <Leg /> },
-        { path: "/Fitness", element: <Fitness /> },
-        { path: "/Spa", element: <Spa /> },
-        { path: "/Caples", element: <Caples /> },
         { path: "/Machines", element: <Machines /> },
-        { path: "/Bar", element: <Bar /> },
 
-        { path: "/shop", element: <Shop/> },
         // ✅ شلنا Admin routes
       ],
     },

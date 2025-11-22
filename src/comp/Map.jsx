@@ -6,18 +6,56 @@ import { Link } from "react-router-dom";
 function Map() {
   const [hoveredArea, setHoveredArea] = useState(null);
 
-  const areas = [
-    { id: "men", name: "Men's Area", style: "top-0 left-0 w-[50%] h-[12.5%]", route: "/men" },
-    { id: "ladies", name: "Ladies Area", style: "top-[12.5%] left-0 w-[50%] h-[12.5%]", route: "/ladies" },
-    { id: "spa", name: "SPA", style: "top-[25%] left-0 w-[50%] h-[12.5%]", route: "/spa" },
-    { id: "bar", name: "Juice Bar", style: "top-[36.5%] left-0 w-[50%] h-[9%]", route: "/bar" },
-    { id: "weight", name: "Weight Training", style: "top-[45%] left-0 w-[50%] h-[26%]", route: "/weight" },
-    { id: "fitness", name: "Fitness Area", style: "bottom-0 left-0 w-[70%] h-[28%]", route: "/fitness" },
-    { id: "cables", name: "Cable Machines", style: "top-0 left-[50%] w-[20%] h-[72%]", route: "/caples" },
-    { id: "machines", name: "Machines", style: "top-[44.5%] right-0 w-[30%] h-[30%]", route: "/machines" },
-    { id: "cardio", name: "Cardio", style: "top-0 right-0 w-[28.3%] h-[45%]", route: "/cardio" },
-    { id: "leg", name: "Leg Training", style: "bottom-0 right-0 w-[29%] h-[25%]", route: "/leg" }
-  ];
+const areas = [
+  // LADIES ROOM (العمود الرفيع الشمال فوق)
+  { 
+    id: "Ladies", 
+    name: "Ladies Room", 
+    style: "top-0 left-0 w-[25%] h-[40%]", 
+    route: "/ladies" 
+  },
+
+  // CARDIO AREA (اليسار تحت)
+  { 
+    id: "Cardio", 
+    name: "Cardio Area", 
+    style: "top-[40%] left-0 w-[25%] h-[60%]", 
+    route: "/cardio" 
+  },
+
+  // MACHINES (المربع الكبير في النص)
+  { 
+    id: "Machines", 
+    name: "Machines", 
+    style: "top-0 left-[27%] w-[45%] h-[65%]", 
+    route: "/machines" 
+  },
+
+  // BAR (شريط صغير نص تحت)
+  { 
+    id: "Bar", 
+    name: "Bar", 
+    style: "top-[66%] left-[27%] w-[45%] h-[8%]", 
+    route: "/bar" 
+  },
+
+  // MEN ROOM (تحت النص)
+  { 
+    id: "Men", 
+    name: "Men Room", 
+    style: "top-[75%] left-[26%] w-[45%] h-[25%]", 
+    route: "/men" 
+  },
+
+  // FREE WEIGHT (العمود الكبير يمين)
+  { 
+    id: "Free", 
+    name: "Free Weight", 
+    style: "top-0 right-0 w-[30%] h-full", 
+    route: "/free" 
+  }
+];
+
 
   const titleVariants = {
     hidden: { opacity: 0, y: -30 },
@@ -77,7 +115,7 @@ function Map() {
       transition: { duration: 0.3 }
     },
     hover: {
-      backgroundColor: "rgba(59, 130, 246, 0.3)",
+      backgroundColor: "red",
       scale: 1.02,
       transition: { duration: 0.2 }
     }
@@ -126,7 +164,7 @@ function Map() {
 
         {/* اللوجو فوق الخريطة */}
         <motion.img
-          src="./maplogo.png"
+          src="./logo.png"
           alt="Map Logo"
           className="absolute center top-24 left-1/2 transform -translate-x-1/2 -z-20"
           variants={logoVariants}

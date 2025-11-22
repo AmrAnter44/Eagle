@@ -35,7 +35,7 @@ const MapComp = ({ src, alt, children }) => {
                 <img
                   src={s}
                   alt={`${alt}-${index}`}
-                  className="w-full h-auto object-cover rounded-lg"
+                  className="w-full h-auto object-cover rounded-lg "
                 />
               </div>
             ))}
@@ -45,8 +45,8 @@ const MapComp = ({ src, alt, children }) => {
         <img src={src} alt={alt} className="w-128 h-128 object-cover" />
       )}
 
-      <h3 className="text-2xl font-bold text-center text-blue-600 mt-12">Details:</h3>
-      <div className="text-l text-start font-bold pl-4">{children}</div>
+      <h3 className="text-2xl font-bold text-center text-red-600 mt-12">Details:</h3>
+      <div className="text-l text-start font-bold pl-4 text-red-600">{children}</div>
     </div>
   );
 };

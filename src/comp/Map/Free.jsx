@@ -1,7 +1,7 @@
 import React from 'react'
 import MapComp from '../Func/MapComp'
 
-export default function Leg() {
+export default function Free() {
   return (
         <MapComp src={'/assets/map/leg.jpg'}   alt="#">
   <ul className='list-disc '>

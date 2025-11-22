@@ -139,17 +139,17 @@ export default function Nav() {
 
             {/* Desktop Navigation */}
             <nav className="hidden lg:flex items-center gap-8">
-              {/* <Link to="/">
+              <Link to="/map">
                 <motion.span
                   className="text-white font-bold text-lg gymfont relative group cursor-pointer"
                   variants={linkVariants}
                   initial="rest"
                   whileHover="hover"
                 >
-                  HOME
+                  MAP
                   <span className="absolute -bottom-1 left-0 w-0 h-0.5 bg-red-600 group-hover:w-full transition-all duration-300"></span>
                 </motion.span>
-              </Link> */}
+              </Link>
 
 
             </nav>
@@ -168,7 +168,7 @@ export default function Nav() {
           >
             <nav className="flex flex-col gap-2 py-4 mt-4 border-t border-red-600/30">
               <Link
-                to="/"
+                to="/map"
                 onClick={() => setOpen(false)}
               >
                 <motion.div
@@ -176,7 +176,7 @@ export default function Nav() {
                   whileHover={{ x: 10, backgroundColor: "rgba(220, 38, 38, 0.2)" }}
                   whileTap={{ scale: 0.98 }}
                 >
-                  HOME
+                  Map
                 </motion.div>
               </Link>
 
