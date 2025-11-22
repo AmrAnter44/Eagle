@@ -13,8 +13,6 @@ import Weight from './comp/Map/Weight';
 import Free from './comp/Map/Free';
 import Machines from './comp/Map/Machines';
 import Map from './comp/Map';
-
-import Shop from './comp/Shop';
 import { Analytics } from "@vercel/analytics/react"
 
 function App() {
