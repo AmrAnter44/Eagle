@@ -77,7 +77,7 @@ export default function Home() {
           </div>
         </motion.div>
 
-        {/* ==================== Offers - Horizontal Scroll ==================== */}
+        {/* ==================== Offers - Grid Layout ==================== */}
         <motion.div 
           className="py-12 overflow-hidden"
           initial="hidden"
@@ -99,10 +99,10 @@ export default function Home() {
             ></motion.div>
           </div>
 
-          {/* Horizontal Scrollable Cards */}
-          <div className="flex overflow-x-auto gap-6 px-4 pb-4 scrollbar-hide snap-x snap-mandatory">
+          {/* Grid Cards */}
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 px-4 max-w-7xl mx-auto">
             {offers.length === 0 ? (
-              <div className="w-full text-center py-12">
+              <div className="w-full text-center py-12 col-span-full">
                 <motion.i 
                   className="text-4xl text-red-600 fa-solid fa-spinner fa-spin"
                   animate={{ rotate: 360 }}
@@ -113,80 +113,88 @@ export default function Home() {
               offers.map((offer, index) => (
                 <motion.div
                   key={offer.id}
-                  className="min-w-[320px] md:min-w-[380px] snap-center"
+                  className="w-full"
                   initial={{ opacity: 0, scale: 0.9 }}
                   whileInView={{ opacity: 1, scale: 1 }}
                   viewport={{ once: true }}
                   transition={{ delay: index * 0.1 }}
                 >
-                  <div className="bg-zinc-900 rounded-3xl overflow-hidden border border-red-600/20 hover:border-red-600 transition-all duration-300 h-full">
+                  {/* Eagle Wing Shape Container */}
+                  <div className="relative h-full">
+                    {/* Wing Shape Background */}
+                    <div className="absolute inset-0 bg-gradient-to-br from-red-600 via-red-700 to-black transform -skew-y-2 rounded-tl-[100px] rounded-br-[100px] opacity-90"></div>
                     
-                    {/* Card Top - Duration */}
-                    <div className="relative h-32 bg-gradient-to-br from-red-600 via-red-700 to-black flex items-center justify-center">
-                      <div className="absolute top-0 left-0 w-full h-full opacity-10">
-                        <div className="absolute top-4 left-4 w-16 h-16 border-2 border-white rotate-45"></div>
-                        <div className="absolute bottom-4 right-4 w-20 h-20 border-2 border-white rotate-12"></div>
+                    {/* Inner Wing Shape */}
+                    <div className="relative bg-zinc-900/95 h-full transform -skew-y-2 rounded-tl-[100px] rounded-br-[100px] border-2 border-red-600/40 hover:border-red-600 transition-all duration-300 overflow-hidden">
+                      
+                      <div className="transform skew-y-2 p-6 h-full flex flex-col">
+                        
+                        {/* Duration Header */}
+                        <div className="text-center mb-4 pb-4 border-b-2 border-red-600/30">
+                          <h3 className="text-3xl font-black text-white gymfont tracking-wider">
+                            {offer.duration}
+                          </h3>
+                        </div>
+
+                        {/* Price Section */}
+                        <div className="mb-6 text-center">
+                          {offer.price_new && offer.price_new !== "0" ? (
+                            <div className="flex items-center justify-center gap-3">
+                              <span className="text-xl text-gray-500 line-through gymfont">
+                                {offer.price}
+                              </span>
+                              <span className="text-4xl font-black text-red-600 gymfont">
+                                {offer.price_new}
+                              </span>
+                              <span className="text-lg text-white/60">EGP</span>
+                            </div>
+                          ) : (
+                            <div className="flex items-center justify-center gap-2">
+                              <span className="text-4xl font-black text-white gymfont">
+                                {offer.price}
+                              </span>
+                              <span className="text-lg text-white/60">EGP</span>
+                            </div>
+                          )}
+                        </div>
+
+                        {/* Features */}
+                        <div className="space-y-3 mb-6 flex-1">
+                          <div className="flex items-center gap-3 text-white/90 bg-black/30 p-2 rounded-lg">
+                            <i className="fa-solid fa-dumbbell text-red-600 text-sm w-5"></i>
+                            <span className="text-sm font-medium">{offer.private} PT Sessions</span>
+                          </div>
+                          <div className="flex items-center gap-3 text-white/90 bg-black/30 p-2 rounded-lg">
+                            <i className="fa-solid fa-user-plus text-red-600 text-sm w-5"></i>
+                            <span className="text-sm font-medium">{offer.invite} Invitations</span>
+                          </div>
+                          {offer.freezing && offer.freezing !== "" && offer.freezing !== 0 && (
+                            <div className="flex items-center gap-3 text-white/90 bg-black/30 p-2 rounded-lg">
+                              <i className="fa-solid fa-snowflake text-red-600 text-sm w-5"></i>
+                              <span className="text-sm font-medium">{offer.freezing} Freezing</span>
+                            </div>
+                          )}
+                          <div className="flex items-center gap-3 text-white/90 bg-black/30 p-2 rounded-lg">
+                            <i className="fa-solid fa-apple-alt text-red-600 text-sm w-5"></i>
+                            <span className="text-sm font-medium">{offer.nutrition} Nutrition</span>
+                          </div>
+                        </div>
+
+                        {/* Button - Wing Shape */}
+                        <motion.button
+                          onClick={() => handlebook(offer)}
+                          className="w-full py-4 bg-gradient-to-r from-red-600 to-red-700 text-white font-bold gymfont rounded-tl-3xl rounded-br-3xl hover:from-red-700 hover:to-red-800 transition-all duration-300 shadow-lg shadow-red-600/30"
+                          whileHover={{ scale: 1.02 }}
+                          whileTap={{ scale: 0.98 }}
+                        >
+                          <i className="fa-solid fa-feather-pointed mr-2"></i>
+                          BOOK NOW
+                        </motion.button>
                       </div>
-                      <h3 className="relative text-3xl font-black text-white gymfont tracking-wider">
-                        {offer.duration}
-                      </h3>
                     </div>
-
-                    <div className="p-6">
-                      {/* Price */}
-                      <div className="mb-6 text-center">
-                        {offer.price_new && offer.price_new !== "0" ? (
-                          <div className="flex items-center justify-center gap-3">
-                            <span className="text-xl text-gray-500 line-through gymfont">
-                              {offer.price}
-                            </span>
-                            <span className="text-4xl font-black text-red-600 gymfont">
-                              {offer.price_new}
-                            </span>
-                            <span className="text-lg text-white/60">EGP</span>
-                          </div>
-                        ) : (
-                          <div className="flex items-center justify-center gap-2">
-                            <span className="text-4xl font-black text-white gymfont">
-                              {offer.price}
-                            </span>
-                            <span className="text-lg text-white/60">EGP</span>
-                          </div>
-                        )}
-                      </div>
-
-                      {/* Features - Compact */}
-                      <div className="space-y-2 mb-6">
-                        <div className="flex items-center gap-2 text-white/90">
-                          <i className="fa-solid fa-dumbbell text-red-600 text-sm w-4"></i>
-                          <span className="text-sm font-medium">{offer.private} PT Sessions</span>
-                        </div>
-                        <div className="flex items-center gap-2 text-white/90">
-                          <i className="fa-solid fa-user-plus text-red-600 text-sm w-4"></i>
-                          <span className="text-sm font-medium">{offer.invite} Invitations</span>
-                        </div>
-                        {offer.freezing && offer.freezing !== "" && offer.freezing !== 0 && (
-                          <div className="flex items-center gap-2 text-white/90">
-                            <i className="fa-solid fa-snowflake text-red-600 text-sm w-4"></i>
-                            <span className="text-sm font-medium">{offer.freezing} Freezing</span>
-                          </div>
-                        )}
-                        <div className="flex items-center gap-2 text-white/90">
-                          <i className="fa-solid fa-apple-alt text-red-600 text-sm w-4"></i>
-                          <span className="text-sm font-medium">{offer.nutrition} Nutrition</span>
-                        </div>
-                      </div>
-
-                      {/* Button */}
-                      <motion.button
-                        onClick={() => handlebook(offer)}
-                        className="w-full py-3 bg-red-600 text-white font-bold gymfont rounded-xl hover:bg-red-700 transition-colors"
-                        whileHover={{ scale: 1.02 }}
-                        whileTap={{ scale: 0.98 }}
-                      >
-                        BOOK NOW
-                      </motion.button>
-                    </div>
+                    
+                    {/* Wing Glow Effect */}
+                    <div className="absolute -inset-1 bg-gradient-to-br from-red-600/20 to-transparent blur-xl -z-10 transform -skew-y-2 rounded-tl-[100px] rounded-br-[100px]"></div>
                   </div>
                 </motion.div>
               ))

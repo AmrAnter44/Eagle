@@ -40,13 +40,6 @@ body {
   box-sizing: border-box;
 }
 
-.active {
-  @apply bg-transparent border-b-2 border-green-500 p-4;
-}
-
-.loader {
-  @apply top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 h-12 w-12 border-b-2 border-white rounded-full animate-spin;
-}
 
 /* Animation for offers sections */
 @keyframes fade-in {
@@ -62,38 +55,4 @@ body {
 
 .animate-fade-in {
   animation: fade-in 0.5s ease-out;
-}
-
-/* Modern Scrollbar - أحمر */
-::-webkit-scrollbar {
-  width: 10px;
-}
-
-::-webkit-scrollbar-track {
-  background: rgba(0, 0, 0, 0.3);
-}
-
-::-webkit-scrollbar-thumb {
-  background: linear-gradient(180deg, #dc2626, #991b1b);
-  border-radius: 10px;
-}
-
-::-webkit-scrollbar-thumb:hover {
-  background: linear-gradient(180deg, #991b1b, #7f1d1d);
-}/* Modern Scrollbar */
-::-webkit-scrollbar {
-  width: 10px;
-}
-
-::-webkit-scrollbar-track {
-  background: rgba(0, 0, 0, 0.3);
-}
-
-::-webkit-scrollbar-thumb {
-  background: linear-gradient(180deg, #dc2626, #991b1b);
-  border-radius: 10px;
-}
-
-::-webkit-scrollbar-thumb:hover {
-  background: linear-gradient(180deg, #991b1b, #7f1d1d);
 }
