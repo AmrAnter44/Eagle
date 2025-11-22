@@ -4,7 +4,8 @@ import Coaches from './Coaches';
 import { Link } from 'react-router-dom';
 import Nav2 from '../Nav2';
 import { dataService } from '../data/dataService';
-import BlackFridayOffer from './BlackFridayOffer'; // حط المسار الصح
+import BlackFridayOffer from './BlackFridayOffer';
+
 export default function Home() {
   const [offers, setOffers] = useState([]);
   const [ptPackages, setPtPackages] = useState([]);
@@ -33,44 +34,20 @@ export default function Home() {
     window.open(url, "whatsappWindow", "width=600,height=600,top=100,left=200");
   }
 
-  const calculatePricePerSession = (price, sessions) => {
-    return Math.round(price / sessions);
-  };
-
   const containerVariants = {
     hidden: { opacity: 0 },
     visible: {
       opacity: 1,
-      transition: {
-        staggerChildren: 0.1
-      }
+      transition: { staggerChildren: 0.15 }
     }
   };
 
-  const cardVariants = {
-    hidden: { opacity: 0, y: 50, scale: 0.9 },
+  const itemVariants = {
+    hidden: { opacity: 0, x: -60 },
     visible: { 
       opacity: 1, 
-      y: 0, 
-      scale: 1,
-      transition: {
-        duration: 0.5,
-        ease: "easeOut"
-      }
-    },
-    hover: {
-      y: -10,
-      scale: 1.03,
-      transition: { duration: 0.3 }
-    }
-  };
-
-  const titleVariants = {
-    hidden: { opacity: 0, y: -30 },
-    visible: { 
-      opacity: 1, 
-      y: 0,
-      transition: { duration: 0.6 }
+      x: 0,
+      transition: { duration: 0.5, ease: "easeOut" }
     }
   };
 
@@ -78,188 +55,175 @@ export default function Home() {
     <>
       <Nav2 />
 
-      <div className="min-h-screen">
-            <BlackFridayOffer />
-        {/* ==================== Membership Offers Section ==================== */}
+      <div className="min-h-screen bg-black">
+        <BlackFridayOffer />
+
+        {/* ==================== Hero Text Section ==================== */}
         <motion.div 
-          className='w-full py-16 bg-gradient-to-b from-black via-red-950/20 to-black'
+          className="text-center py-12 px-4"
+          initial={{ opacity: 0, y: 30 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.8 }}
+        >
+          <h1 className="text-5xl md:text-7xl font-black text-white gymfont mb-4">
+            EAGLE <span className="text-red-600">GYM</span>
+          </h1>
+          <div className="flex items-center justify-center gap-4 text-white/80 text-sm md:text-base">
+            <span className="uppercase tracking-widest">Transform</span>
+            <div className="w-2 h-2 bg-red-600 rotate-45"></div>
+            <span className="uppercase tracking-widest">Dominate</span>
+            <div className="w-2 h-2 bg-red-600 rotate-45"></div>
+            <span className="uppercase tracking-widest">Conquer</span>
+          </div>
+        </motion.div>
+
+        {/* ==================== Offers - Horizontal Scroll ==================== */}
+        <motion.div 
+          className="py-12 overflow-hidden"
           initial="hidden"
           whileInView="visible"
           viewport={{ once: true }}
           variants={containerVariants}
         >
-          <div className="max-w-7xl mx-auto px-4">
-            
-            <motion.div 
-              className="text-center mb-12"
-              variants={titleVariants}
+          <div className="px-4 mb-8">
+            <motion.h2 
+              className="text-3xl md:text-4xl font-black text-white gymfont inline-block"
+              variants={itemVariants}
             >
-              <h2 className='text-4xl md:text-5xl text-white font-bold gymfont mb-4 gradient-text'>
-                MEMBERSHIP OFFERS
-              </h2>
-              <div className="w-32 h-1 bg-gradient-to-r from-red-600 to-white mx-auto rounded-full"></div>
-            </motion.div>
+              MEMBERSHIP 
+              <span className="text-red-600 ml-2">OFFERS</span>
+            </motion.h2>
+            <motion.div 
+              className="h-1 w-24 bg-red-600 mt-2"
+              variants={itemVariants}
+            ></motion.div>
+          </div>
 
-            <motion.div 
-              className='grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8'
-              variants={containerVariants}
-            >
-              {offers.length === 0 ? (
-                <div className="col-span-full text-center py-8">
-                  <motion.i 
-                    className="text-4xl text-red-600 fa-solid fa-spinner fa-spin"
-                    animate={{ rotate: 360 }}
-                    transition={{ duration: 1, repeat: Infinity, ease: "linear" }}
-                  />
-                </div>
-              ) : (
-                offers.map((offer, index) => (
-                  <motion.div 
-                    key={offer.id} 
-                    className="relative group"
-                    variants={cardVariants}
-                    whileHover="hover"
-                    custom={index}
-                  >
-                    {/* Glow Effect */}
-                    <div className="absolute -inset-1 bg-gradient-to-r from-red-600 to-black rounded-2xl blur-xl opacity-25 group-hover:opacity-50 transition duration-500"></div>
+          {/* Horizontal Scrollable Cards */}
+          <div className="flex overflow-x-auto gap-6 px-4 pb-4 scrollbar-hide snap-x snap-mandatory">
+            {offers.length === 0 ? (
+              <div className="w-full text-center py-12">
+                <motion.i 
+                  className="text-4xl text-red-600 fa-solid fa-spinner fa-spin"
+                  animate={{ rotate: 360 }}
+                  transition={{ duration: 1, repeat: Infinity, ease: "linear" }}
+                />
+              </div>
+            ) : (
+              offers.map((offer, index) => (
+                <motion.div
+                  key={offer.id}
+                  className="min-w-[320px] md:min-w-[380px] snap-center"
+                  initial={{ opacity: 0, scale: 0.9 }}
+                  whileInView={{ opacity: 1, scale: 1 }}
+                  viewport={{ once: true }}
+                  transition={{ delay: index * 0.1 }}
+                >
+                  <div className="bg-zinc-900 rounded-3xl overflow-hidden border border-red-600/20 hover:border-red-600 transition-all duration-300 h-full">
                     
-                    {/* Card Content */}
-                    <div className="relative bg-black/90 backdrop-blur-xl rounded-2xl overflow-hidden border-2 border-red-600/30 group-hover:border-red-600 transition-all duration-300">
-                      
-                      {/* Header */}
-                      <div className="bg-gradient-to-r from-red-600 to-red-800 p-6 relative overflow-hidden">
-                        <motion.div 
-                          className="absolute inset-0 bg-white/10"
-                          initial={{ x: '-100%' }}
-                          whileHover={{ x: '100%' }}
-                          transition={{ duration: 0.6 }}
-                        />
-                        <h3 className='relative font-bold text-3xl gymfont text-white text-center tracking-wider'>
-                          <i className="fa-solid fa-dumbbell pr-2"></i>
-                          {offer.duration}
-                        </h3>
+                    {/* Card Top - Duration */}
+                    <div className="relative h-32 bg-gradient-to-br from-red-600 via-red-700 to-black flex items-center justify-center">
+                      <div className="absolute top-0 left-0 w-full h-full opacity-10">
+                        <div className="absolute top-4 left-4 w-16 h-16 border-2 border-white rotate-45"></div>
+                        <div className="absolute bottom-4 right-4 w-20 h-20 border-2 border-white rotate-12"></div>
                       </div>
-
-                      {/* Body */}
-                      <div className='p-6 space-y-6'>
-                        
-                        {/* Price Section */}
-                        <div className='flex justify-center items-center gap-4'>
-                          {offer.price_new && offer.price_new !== "0" ? (
-                            <>
-                              <motion.h3 
-                                className="font-bold text-xl line-through text-gray-500 gymfont"
-                                initial={{ opacity: 0, x: -20 }}
-                                animate={{ opacity: 1, x: 0 }}
-                                transition={{ delay: 0.2 }}
-                              >
-                                {offer.price} EGP
-                              </motion.h3>
-                              <motion.h3 
-                                className="font-bold text-4xl text-red-600 gymfont"
-                                initial={{ opacity: 0, scale: 0.5 }}
-                                animate={{ opacity: 1, scale: 1 }}
-                                transition={{ delay: 0.3, type: "spring" }}
-                              >
-                                {offer.price_new} EGP
-                              </motion.h3>
-                            </>
-                          ) : (
-                            <motion.h3 
-                              className="font-bold text-4xl text-white gymfont"
-                              initial={{ opacity: 0, scale: 0.5 }}
-                              animate={{ opacity: 1, scale: 1 }}
-                              transition={{ delay: 0.3, type: "spring" }}
-                            >
-                              {offer.price} EGP
-                            </motion.h3>
-                          )}
-                        </div>
-
-                        {/* Features List */}
-                        <ul className='space-y-3 text-white'>
-                          <motion.li 
-                            className='flex items-center gap-3 font-semibold text-lg'
-                            whileHover={{ x: 5 }}
-                          >
-                            <i className='fa-solid fa-check text-red-600 text-xl'></i>
-                            <span>{offer.private} PT Sessions</span>
-                          </motion.li>
-                          <motion.li 
-                            className='flex items-center gap-3 font-semibold text-lg'
-                            whileHover={{ x: 5 }}
-                          >
-                            <i className='fa-solid fa-check text-red-600 text-xl'></i>
-                            <span>{offer.invite} Invitations</span>
-                          </motion.li>
-{offer.freezing && offer.freezing !== "" && offer.freezing !== 0 && (
-  <motion.li 
-    className="flex items-center gap-3 font-semibold text-lg"
-    whileHover={{ x: 5 }}
-  >
-    <i className="fa-solid fa-check text-red-600 text-xl"></i>
-    <span>{offer.freezing} Freezing</span>
-  </motion.li>
-)}
-
-
-
-                          <motion.li 
-                            className='flex items-center gap-3 font-semibold text-lg'
-                            whileHover={{ x: 5 }}
-                          >
-                            <i className='fa-solid fa-check text-red-600 text-xl'></i>
-                            <span>{offer.nutrition} Nutrition Session</span>
-                          </motion.li>
-
-                        </ul>
-
-                        {/* Book Button */}
-                        <motion.button
-                          onClick={() => handlebook(offer)}
-                          className='relative w-full px-6 py-4 bg-gradient-to-r from-red-600 to-red-700 text-white rounded-xl font-bold text-lg gymfont overflow-hidden group/btn'
-                          whileHover={{ scale: 1.05 }}
-                          whileTap={{ scale: 0.95 }}
-                        >
-                          <span className="relative z-10">BOOK NOW</span>
-                          <motion.div 
-                            className="absolute inset-0 bg-white/20"
-                            initial={{ x: '-100%' }}
-                            whileHover={{ x: '100%' }}
-                            transition={{ duration: 0.6 }}
-                          />
-                        </motion.button>
-                      </div>
+                      <h3 className="relative text-3xl font-black text-white gymfont tracking-wider">
+                        {offer.duration}
+                      </h3>
                     </div>
-                  </motion.div>
-                ))
-              )}
-            </motion.div>
+
+                    <div className="p-6">
+                      {/* Price */}
+                      <div className="mb-6 text-center">
+                        {offer.price_new && offer.price_new !== "0" ? (
+                          <div className="flex items-center justify-center gap-3">
+                            <span className="text-xl text-gray-500 line-through gymfont">
+                              {offer.price}
+                            </span>
+                            <span className="text-4xl font-black text-red-600 gymfont">
+                              {offer.price_new}
+                            </span>
+                            <span className="text-lg text-white/60">EGP</span>
+                          </div>
+                        ) : (
+                          <div className="flex items-center justify-center gap-2">
+                            <span className="text-4xl font-black text-white gymfont">
+                              {offer.price}
+                            </span>
+                            <span className="text-lg text-white/60">EGP</span>
+                          </div>
+                        )}
+                      </div>
+
+                      {/* Features - Compact */}
+                      <div className="space-y-2 mb-6">
+                        <div className="flex items-center gap-2 text-white/90">
+                          <i className="fa-solid fa-dumbbell text-red-600 text-sm w-4"></i>
+                          <span className="text-sm font-medium">{offer.private} PT Sessions</span>
+                        </div>
+                        <div className="flex items-center gap-2 text-white/90">
+                          <i className="fa-solid fa-user-plus text-red-600 text-sm w-4"></i>
+                          <span className="text-sm font-medium">{offer.invite} Invitations</span>
+                        </div>
+                        {offer.freezing && offer.freezing !== "" && offer.freezing !== 0 && (
+                          <div className="flex items-center gap-2 text-white/90">
+                            <i className="fa-solid fa-snowflake text-red-600 text-sm w-4"></i>
+                            <span className="text-sm font-medium">{offer.freezing} Freezing</span>
+                          </div>
+                        )}
+                        <div className="flex items-center gap-2 text-white/90">
+                          <i className="fa-solid fa-apple-alt text-red-600 text-sm w-4"></i>
+                          <span className="text-sm font-medium">{offer.nutrition} Nutrition</span>
+                        </div>
+                      </div>
+
+                      {/* Button */}
+                      <motion.button
+                        onClick={() => handlebook(offer)}
+                        className="w-full py-3 bg-red-600 text-white font-bold gymfont rounded-xl hover:bg-red-700 transition-colors"
+                        whileHover={{ scale: 1.02 }}
+                        whileTap={{ scale: 0.98 }}
+                      >
+                        BOOK NOW
+                      </motion.button>
+                    </div>
+                  </div>
+                </motion.div>
+              ))
+            )}
           </div>
         </motion.div>
 
-        {/* ==================== Marquee Section ==================== */}
+        {/* ==================== Coaches Section ==================== */}
+        <Coaches />
+
+        {/* ==================== Motivational Banner ==================== */}
         <motion.div 
-          className="marquee"
+          className="py-16 px-4 bg-gradient-to-r from-black via-red-950/30 to-black"
           initial={{ opacity: 0 }}
           whileInView={{ opacity: 1 }}
           viewport={{ once: true }}
-          transition={{ duration: 0.6 }}
         >
-          <p className="gymfont">
-            <span># BELIEVE IN YOURSELF</span> &nbsp; &nbsp;
-            <span># EAGLE GYM</span> &nbsp; &nbsp;
-            <span># NO PAIN NO GAIN</span> &nbsp; &nbsp;
-            <span># TRANSFORM YOUR BODY</span> &nbsp; &nbsp;
-          </p>
+          <div className="max-w-5xl mx-auto text-center">
+            <motion.h3 
+              className="text-2xl md:text-4xl font-black text-white gymfont mb-4"
+              initial={{ y: 20, opacity: 0 }}
+              whileInView={{ y: 0, opacity: 1 }}
+              viewport={{ once: true }}
+            >
+              YOUR JOURNEY STARTS <span className="text-red-600">HERE</span>
+            </motion.h3>
+            <motion.p 
+              className="text-white/70 text-lg"
+              initial={{ y: 20, opacity: 0 }}
+              whileInView={{ y: 0, opacity: 1 }}
+              viewport={{ once: true }}
+              transition={{ delay: 0.2 }}
+            >
+              No Pain • No Gain • No Limits
+            </motion.p>
+          </div>
         </motion.div>
-
-
-        <Coaches /> 
-
-        {/* ==================== Features Section ==================== */}
-
 
       </div>
     </>
