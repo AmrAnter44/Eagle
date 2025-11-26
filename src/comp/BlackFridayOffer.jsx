@@ -103,7 +103,12 @@ export default function BlackFridayOffer() {
           </div>
 
           {/* Button */}
-
+          <button
+            onClick={handleBook}
+            className='px-8 py-3 bg-gradient-to-r from-red-600 to-red-500 text-white rounded-xl hover:from-red-500 hover:to-red-400 transition-all duration-300 font-bold transform hover:scale-105 active:scale-95'
+          >
+            Book Now
+          </button>
         </div>
       </div>
     </section>
