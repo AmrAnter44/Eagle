@@ -5,6 +5,7 @@ import { Link } from 'react-router-dom';
 import Nav2 from '../Nav2';
 import { dataService } from '../data/dataService';
 import BlackFridayOffer from './BlackFridayOffer';
+import CompetitionSection from './CompetitionSection';
 
 export default function Home() {
   const [offers, setOffers] = useState([]);
@@ -57,6 +58,7 @@ export default function Home() {
 
       <div className="min-h-screen bg-black">
         <BlackFridayOffer />
+        <CompetitionSection />
 
         {/* ==================== Hero Text Section ==================== */}
         <motion.div 
