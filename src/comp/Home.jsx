@@ -57,8 +57,7 @@ export default function Home() {
       <Nav2 />
 
       <div className="min-h-screen bg-black">
-        <BlackFridayOffer />
-        <CompetitionSection />
+
 
         {/* ==================== Hero Text Section ==================== */}
         <motion.div 
