@@ -103,6 +103,12 @@
       "name": "Abdelrhman",
       "img": "/coaches/abdelrhman.png",
       "title": "Personal trainer"
+    },
+    {
+            "id": 6,
+      "name": "tayson",
+      "img": "/coaches/tayson.png",
+      "title": "Personal trainer"
     }
   ],
   "classes": [

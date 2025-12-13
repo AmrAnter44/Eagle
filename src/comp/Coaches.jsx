@@ -14,13 +14,21 @@ export default function Coaches() {
 
   useEffect(() => {
     if (coaches.length === 0) return;
-    
+
     const timer = setInterval(() => {
       setCurrent((prev) => (prev + 1) % coaches.length);
     }, 3500);
 
     return () => clearInterval(timer);
   }, [coaches.length]);
+
+  const handleNext = () => {
+    setCurrent((prev) => (prev + 1) % coaches.length);
+  };
+
+  const handlePrev = () => {
+    setCurrent((prev) => (prev - 1 + coaches.length) % coaches.length);
+  };
 
   return (
     <section className="py-16 px-4 bg-zinc-950">
@@ -60,11 +68,30 @@ export default function Coaches() {
                 {/* Coach Image - في النص */}
                 <div className="relative mb-6 h-72 flex items-center justify-center">
                   <div className="absolute inset-0 bg-red-600/20 blur-2xl"></div>
+
+                  {/* Left Arrow */}
+                  <button
+                    onClick={handlePrev}
+                    className="absolute left-0 z-10 bg-red-600 hover:bg-red-700 text-white p-3 rounded-full transition-all duration-300 hover:scale-110 shadow-lg"
+                    aria-label="Previous coach"
+                  >
+                    <i className="fa-solid fa-chevron-left text-xl"></i>
+                  </button>
+
                   <img
                     className="relative w-64 object-cover rounded-xl"
                     src={coaches[current].img}
                     alt={`Coach ${coaches[current].name}`}
                   />
+
+                  {/* Right Arrow */}
+                  <button
+                    onClick={handleNext}
+                    className="absolute right-0 z-10 bg-red-600 hover:bg-red-700 text-white p-3 rounded-full transition-all duration-300 hover:scale-110 shadow-lg"
+                    aria-label="Next coach"
+                  >
+                    <i className="fa-solid fa-chevron-right text-xl"></i>
+                  </button>
                 </div>
 
                 {/* Navigation Dots */}

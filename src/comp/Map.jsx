@@ -6,55 +6,50 @@ import { Link } from "react-router-dom";
 function Map() {
   const [hoveredArea, setHoveredArea] = useState(null);
 
-// const areas = [
-//   // LADIES ROOM (العمود الرفيع الشمال فوق)
-//   { 
-//     id: "Ladies", 
-//     name: "Ladies Room", 
-//     style: "top-0 left-0 w-[25%] h-[40%]", 
-//     route: "/ladies" 
-//   },
+const areas = [
+  // LADIES ROOM (العمود الرفيع الشمال فوق)
+  { 
+    id: "Ladies", 
+    name: "Ladies Room", 
+    style: "top-0 left-0 w-[25%] h-[40%]", 
+    route: "/ladies" 
+  },
 
-//   // CARDIO AREA (اليسار تحت)
-//   { 
-//     id: "Cardio", 
-//     name: "Cardio Area", 
-//     style: "top-[40%] left-0 w-[25%] h-[60%]", 
-//     route: "/cardio" 
-//   },
+  // CARDIO AREA (اليسار تحت)
+  { 
+    id: "Cardio", 
+    name: "Cardio Area", 
+    style: "top-[40%] left-0 w-[25%] h-[60%]", 
+    route: "/cardio" 
+  },
 
-//   // MACHINES (المربع الكبير في النص)
-//   { 
-//     id: "Machines", 
-//     name: "Machines", 
-//     style: "top-0 left-[27%] w-[45%] h-[65%]", 
-//     route: "/machines" 
-//   },
+  // MACHINES (المربع الكبير في النص)
+  { 
+    id: "Machines", 
+    name: "Machines", 
+    style: "top-0 left-[27%] w-[45%] h-[65%]", 
+    route: "/machines" 
+  },
 
-//   // BAR (شريط صغير نص تحت)
-//   { 
-//     id: "Bar", 
-//     name: "Bar", 
-//     style: "top-[66%] left-[27%] w-[45%] h-[8%]", 
-//     route: "/bar" 
-//   },
+  // BAR (شريط صغير نص تحت)
 
-//   // MEN ROOM (تحت النص)
-//   { 
-//     id: "Men", 
-//     name: "Men Room", 
-//     style: "top-[75%] left-[26%] w-[45%] h-[25%]", 
-//     route: "/men" 
-//   },
 
-//   // FREE WEIGHT (العمود الكبير يمين)
-//   { 
-//     id: "Free", 
-//     name: "Free Weight", 
-//     style: "top-0 right-0 w-[30%] h-full", 
-//     route: "/free" 
-//   }
-// ];
+  // MEN ROOM (تحت النص)
+  { 
+    id: "Men", 
+    name: "Men Room", 
+    style: "top-[75%] left-[26%] w-[47%] h-[23%]", 
+    route: "/men" 
+  },
+
+  // FREE WEIGHT (العمود الكبير يمين)
+  { 
+    id: "Free", 
+    name: "Free Weight", 
+    style: "top-0 right-0 w-[30%] h-full", 
+    route: "/free" 
+  }
+];
 
 
   const titleVariants = {
@@ -171,7 +166,7 @@ function Map() {
           whileHover="hover"
         />
 
-        {/* المناطق التفاعلية
+       
         {areas.map((area, index) => (
           <motion.div
             key={area.id}
@@ -194,7 +189,7 @@ function Map() {
               />
             </Link>
           </motion.div>
-        ))} */}
+        ))}
 
         {/* Tooltip عند الـ hover */}
         {hoveredArea && (
@@ -215,8 +210,8 @@ function Map() {
           </motion.div>
         )}
 
-        {/* تأثير Pulse على المناطق */}
-        {/* {areas.map((area, index) => (
+
+         {areas.map((area, index) => (
           <motion.div
             key={`pulse-${area.id}`}
             className={`absolute ${area.style} z-5 pointer-events-none`}
@@ -234,7 +229,7 @@ function Map() {
           >
             <div className="w-full h-full bg-red-600 rounded-lg" />
           </motion.div>
-        ))}*/}
+        ))}
       </motion.div>
     </motion.div> 
     
