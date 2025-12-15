@@ -4,7 +4,7 @@
       "id": 1,
       "duration": "1 Month",
       "price": "1000",
-      "price_new": "800",
+      "price_new": "700",
       "private": "1",
       "invite": "2",
        "freezing": "",
@@ -12,14 +12,25 @@
     },
     {
       "id": 2,
-      "duration": "3 Months",
-      "price": "2000",
+      "duration": "2 Months + 1 Free",
+      "price": "2100",
+      "price_new": "1400",
+      "private": "2",
+      "invite": "6",
+      "freezing": "2 Weeks",
+       "nutrition":"1"
+    },
+    {
+      "id": 2222,
+      "duration": "3 Months + 1 Free",
+      "price": "2500",
       "price_new": "1800",
       "private": "2",
       "invite": "6",
       "freezing": "2 Weeks",
        "nutrition":"1"
     },
+    
     {
       "id": 3,
       "duration": "6 Months",
@@ -34,7 +45,7 @@
       "id": 4,
       "duration": "12 Months",
       "price": "5000",
-      "price_new": "3500",
+      "price_new": "3000",
       "private": "4",
       "invite": "12",
      "freezing": "2 Months",
