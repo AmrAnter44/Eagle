@@ -1,13 +1,6 @@
 import React from 'react';
 
 export default function CompetitionSection() {
-  const handleRegister = () => {
-    const phone = "201507817517";
-    const message = "Hello, I would like to register for the Competition on December 1st";
-    const url = `https://wa.me/${phone}?text=${encodeURIComponent(message)}`;
-    window.open(url, "whatsappWindow", "width=700,height=700,top=100,left=200");
-  };
-
   return (
     <section className='relative w-full py-12 px-4 overflow-hidden'>
       {/* Background */}
@@ -91,19 +84,6 @@ export default function CompetitionSection() {
             </div>
           </div>
 
-        </div>
-
-        {/* Call to Action */}
-        <div className="text-center">
-          <button
-            onClick={handleRegister}
-            className='px-10 py-4 bg-gradient-to-r from-red-600 to-red-500 text-white text-lg rounded-xl hover:from-red-500 hover:to-red-400 transition-all duration-300 font-bold transform hover:scale-105 active:scale-95 shadow-lg shadow-red-500/50'
-          >
-            Register Now
-          </button>
-          <p className="text-gray-400 text-sm mt-4">
-            Limited spots available - Register today!
-          </p>
         </div>
 
       </div>

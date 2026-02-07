@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
 import { motion } from "framer-motion";
+import BranchSelector from "./comp/BranchSelector";
 
 export default function Nav() {
   const [open, setOpen] = useState(false);
@@ -111,6 +112,11 @@ export default function Nav() {
 
             {/* Mobile Menu Button */}
             <div className="flex items-center gap-4 lg:hidden">
+              {/* Branch Selector for Mobile */}
+              <div className="scale-90">
+                <BranchSelector />
+              </div>
+
               <motion.button
                 className="text-white text-3xl p-2 rounded-lg"
                 onClick={() => setOpen(!open)}
@@ -139,7 +145,8 @@ export default function Nav() {
 
             {/* Desktop Navigation */}
             <nav className="hidden lg:flex items-center gap-8">
-              <Link to="/map">
+              {/* MAP - مخفي مؤقتاً */}
+              {/* <Link to="map">
                 <motion.span
                   className="text-white font-bold text-lg gymfont relative group cursor-pointer"
                   variants={linkVariants}
@@ -149,9 +156,10 @@ export default function Nav() {
                   MAP
                   <span className="absolute -bottom-1 left-0 w-0 h-0.5 bg-red-600 group-hover:w-full transition-all duration-300"></span>
                 </motion.span>
-              </Link>
+              </Link> */}
 
-
+              {/* Branch Selector */}
+              <BranchSelector />
             </nav>
 
           </div>
@@ -167,8 +175,9 @@ export default function Nav() {
             className="overflow-hidden lg:hidden"
           >
             <nav className="flex flex-col gap-2 py-4 mt-4 border-t border-red-600/30">
-              <Link
-                to="/map"
+              {/* MAP - مخفي مؤقتاً */}
+              {/* <Link
+                to="map"
                 onClick={() => setOpen(false)}
               >
                 <motion.div
@@ -178,7 +187,7 @@ export default function Nav() {
                 >
                   Map
                 </motion.div>
-              </Link>
+              </Link> */}
 
             </nav>
           </motion.div>

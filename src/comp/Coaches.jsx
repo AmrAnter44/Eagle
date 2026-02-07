@@ -1,16 +1,27 @@
 import React, { useState, useEffect } from 'react';
 import Trans from '../comp/Trans';
 import { dataService } from '../data/dataService';
+import { useBranch } from '../context/BranchContext';
 
 export default function Coaches() {
   const [coaches, setCoaches] = useState([]);
   const [current, setCurrent] = useState(0);
+  const [imageError, setImageError] = useState({});
+  const { selectedBranch } = useBranch();
 
+  // Load coaches when component mounts or branch changes
   useEffect(() => {
-    dataService.getCoaches().then(({ data }) => {
-      if (data) setCoaches(data);
-    });
-  }, []);
+    loadCoaches();
+  }, [selectedBranch]);
+
+  const loadCoaches = async () => {
+    const { data } = await dataService.getCoaches();
+    if (data) {
+      console.log('Coaches data:', data); // للتأكد من البيانات
+      setCoaches(data);
+      setCurrent(0); // Reset to first coach when branch changes
+    }
+  };
 
   useEffect(() => {
     if (coaches.length === 0) return;
@@ -60,7 +71,7 @@ export default function Coaches() {
                       {coaches[current].name}
                     </h3>
                     <p className="text-red-600 font-semibold text-sm uppercase tracking-wider">
-                      {coaches[current].title}
+                      {coaches[current].title || coaches[current].name_ar || 'Coach'}
                     </p>
                   </div>
                 </div>
@@ -78,11 +89,20 @@ export default function Coaches() {
                     <i className="fa-solid fa-chevron-left text-xl"></i>
                   </button>
 
-                  <img
-                    className="relative w-64 object-cover rounded-xl"
-                    src={coaches[current].img}
-                    alt={`Coach ${coaches[current].name}`}
-                  />
+                  {!coaches[current].img || imageError[current] ? (
+                    // عرض أيقونة لو الصورة مش موجودة
+                    <div className="relative w-64 h-64 flex items-center justify-center bg-gradient-to-br from-zinc-800 to-zinc-900 rounded-xl border-2 border-red-600/30">
+                      <i className="fa-solid fa-dumbbell text-9xl text-red-600"></i>
+                    </div>
+                  ) : (
+                    // عرض الصورة لو موجودة
+                    <img
+                      className="relative w-64 object-cover rounded-xl"
+                      src={coaches[current].img}
+                      alt={`Coach ${coaches[current].name}`}
+                      onError={() => setImageError(prev => ({ ...prev, [current]: true }))}
+                    />
+                  )}
 
                   {/* Right Arrow */}
                   <button

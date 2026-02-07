@@ -6,7 +6,8 @@ body {
   margin: 0;
   padding: 0;
   box-sizing: border-box;
-  user-select: none;
+  /* user-select: none; - تم إزالته عشان تقدر تختار النصوص والأرقام */
+  user-select: text; /* دلوقتي تقدر تختار أي نص في الموقع */
 }
 
 .gold {

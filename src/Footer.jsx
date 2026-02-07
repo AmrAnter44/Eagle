@@ -1,19 +1,23 @@
 import React from 'react';
 import { motion } from 'framer-motion';
+import { useBranch } from './context/BranchContext';
 
 export default function Footer() {
+  const { selectedBranch } = useBranch();
+
+  // Location URLs for each branch
+  const locationUrls = {
+    boolaq: 'https://maps.app.goo.gl/aPxRWXb3iY4j8SMd8',
+    qoopa: 'https://maps.app.goo.gl/vpAfmd612sXXUVwe9',
+    fostat: 'https://www.google.com/maps/place/eagle+gym+%D8%A7%D9%84%D9%81%D8%B3%D8%B7%D8%A7%D8%B7%E2%80%AD/data=!4m2!3m1!1s0x145847004519ae1f:0xd7eaec49d4769777?sa=X&ved=1t:242&ictx=111'
+  };
+
   const socialLinks = [
     {
       name: 'Instagram',
       icon: 'fa-brands fa-instagram',
       url: 'https://www.instagram.com/eaglegym2024',
       color: '#E4405F'
-    },
-    {
-      name: 'WhatsApp',
-      icon: 'fa-brands fa-whatsapp',
-      url: 'https://wa.me/201507817517',
-      color: '#25D366'
     },
     {
       name: 'Facebook',
@@ -24,7 +28,7 @@ export default function Footer() {
     {
       name: 'Location',
       icon: 'fa-solid fa-location-dot',
-      url: 'https://www.google.com/maps/place/eagle+gym+%D8%A7%D9%84%D9%81%D8%B3%D8%B7%D8%A7%D8%B7%E2%80%AD/data=!4m2!3m1!1s0x145847004519ae1f:0xd7eaec49d4769777?sa=X&ved=1t:242&ictx=111',
+      url: locationUrls[selectedBranch] || locationUrls.fostat,
       color: '#EA4335'
     }
   ];
@@ -144,26 +148,6 @@ export default function Footer() {
           </motion.a>
           {" "}© {new Date().getFullYear()}
         </p>
-      </motion.div>
-
-      {/* Google Maps */}
-      <motion.div
-        initial={{ opacity: 0, height: 0 }}
-        whileInView={{ opacity: 1, height: 'auto' }}
-        viewport={{ once: true }}
-        transition={{ duration: 0.8 }}
-        className="overflow-hidden"
-      >
-        <iframe 
-          src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3455.060212663338!2d31.252080799999998!3d30.006427400000003!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x145847004519ae1f%3A0xd7eaec49d4769777!2sEAGLE%20GYM!5e0!3m2!1sen!2seg!4v1762820295028!5m2!1sen!2seg"
-          width="100%" 
-          height="400" 
-          style={{ border: 0, filter: 'grayscale(0.3) contrast(1.2)' }} 
-          allowFullScreen="" 
-          loading="lazy" 
-          referrerPolicy="no-referrer-when-downgrade"
-          className="border-t-2 border-red-600"
-        />
       </motion.div>
     </>
   );

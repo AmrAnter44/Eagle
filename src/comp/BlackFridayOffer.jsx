@@ -1,17 +1,42 @@
 import React, { useState, useEffect } from 'react';
+import { dataService } from '../data/dataService';
+import { useBranch } from '../context/BranchContext';
 
 export default function BlackFridayOffer() {
   const [isVisible, setIsVisible] = useState(true);
+  const [offers, setOffers] = useState([]);
+  const [currentOffer, setCurrentOffer] = useState(null);
   const [timeLeft, setTimeLeft] = useState({
     days: 0,
     hours: 0,
     minutes: 0,
     seconds: 0
   });
+  const { selectedBranch, getCurrentBranch } = useBranch();
+
+  // Load special offers when component mounts or branch changes
+  useEffect(() => {
+    loadOffers();
+  }, [selectedBranch]);
+
+  const loadOffers = async () => {
+    const { data } = await dataService.getSpecialOffers();
+    if (data && data.length > 0) {
+      setOffers(data);
+      // Get first active offer
+      const activeOffer = data.find(offer => {
+        if (!offer.valid_until) return true;
+        return new Date(offer.valid_until) > new Date();
+      });
+      setCurrentOffer(activeOffer || data[0]);
+    }
+  };
 
   useEffect(() => {
+    if (!currentOffer || !currentOffer.valid_until) return;
+
     const calculateTimeLeft = () => {
-      const endDate = new Date('2025-11-29T23:59:59');
+      const endDate = new Date(currentOffer.valid_until);
       const now = new Date();
       const difference = endDate - now;
 
@@ -31,16 +56,29 @@ export default function BlackFridayOffer() {
     const timer = setInterval(calculateTimeLeft, 1000);
 
     return () => clearInterval(timer);
-  }, []);
+  }, [currentOffer]);
 
-  const handleBook = () => {
-    const phone = "201507817517";  
-    const message = "Hello, I would like to book the Black Friday offer: 3 months + 2 free months for 1800 EGP";
-    const url = `https://wa.me/${phone}?text=${encodeURIComponent(message)}`;
-    window.open(url, "whatsappWindow", "width=700,height=700,top=100,left=200");
+  // Don't show if no offer or not visible
+  if (!isVisible || !currentOffer) return null;
+
+  // Extract duration numbers from features if available
+  const extractNumbers = (features) => {
+    if (!features || !Array.isArray(features)) return { months: 3, free: 2 };
+
+    // Try to find months in features
+    const monthsFeature = features.find(f => f.toLowerCase().includes('month'));
+    const freeFeature = features.find(f => f.toLowerCase().includes('free'));
+
+    const monthsMatch = monthsFeature?.match(/(\d+)/);
+    const freeMatch = freeFeature?.match(/(\d+)/);
+
+    return {
+      months: monthsMatch ? parseInt(monthsMatch[1]) : 3,
+      free: freeMatch ? parseInt(freeMatch[1]) : 2
+    };
   };
 
-  if (!isVisible) return null;
+  const { months, free } = extractNumbers(currentOffer.features);
 
   return (
     <section className='relative w-full py-8 px-4 overflow-hidden'>
@@ -76,39 +114,42 @@ export default function BlackFridayOffer() {
           
           {/* Badge */}
           <div>
-            <span className="inline-block px-4 py-1 bg-gradient-to-r from-red-500 to-red-700 text-white text-sm font-bold rounded-full">
-              BLACK FRIDAY
+            <span className="inline-block px-4 py-1 bg-gradient-to-r from-red-500 to-red-700 text-white text-sm font-bold rounded-full uppercase">
+              {currentOffer.offer_type?.replace('_', ' ') || 'SPECIAL OFFER'}
             </span>
           </div>
 
           {/* Offer */}
           <div className="flex items-center gap-4">
             <div className="text-center">
-              <div className="text-5xl font-bold text-white gymfont">3</div>
+              <div className="text-5xl font-bold text-white gymfont">{months}</div>
               <div className="text-xs text-red-400 font-semibold">Months</div>
             </div>
 
-            <div className="text-3xl text-red-400 font-bold">+</div>
+            {free > 0 && (
+              <>
+                <div className="text-3xl text-red-400 font-bold">+</div>
 
-            <div className="text-center">
-              <div className="text-5xl font-bold text-red-400 gymfont">2</div>
-              <div className="text-xs text-white font-semibold">Free</div>
-            </div>
+                <div className="text-center">
+                  <div className="text-5xl font-bold text-red-400 gymfont">{free}</div>
+                  <div className="text-xs text-white font-semibold">Free</div>
+                </div>
+              </>
+            )}
           </div>
 
           {/* Price */}
-          <div className="flex items-center gap-2">
-            <span className="text-5xl font-bold text-white gymfont">2000</span>
-            <span className="text-xl font-bold text-red-400">EGP</span>
+          <div className="flex flex-col items-center">
+            {currentOffer.original_price && currentOffer.original_price > currentOffer.price && (
+              <span className="text-2xl text-gray-400 line-through gymfont">
+                {currentOffer.original_price}
+              </span>
+            )}
+            <div className="flex items-center gap-2">
+              <span className="text-5xl font-bold text-white gymfont">{currentOffer.price}</span>
+              <span className="text-xl font-bold text-red-400">EGP</span>
+            </div>
           </div>
-
-          {/* Button */}
-          <button
-            onClick={handleBook}
-            className='px-8 py-3 bg-gradient-to-r from-red-600 to-red-500 text-white rounded-xl hover:from-red-500 hover:to-red-400 transition-all duration-300 font-bold transform hover:scale-105 active:scale-95'
-          >
-            Book Now
-          </button>
         </div>
       </div>
     </section>

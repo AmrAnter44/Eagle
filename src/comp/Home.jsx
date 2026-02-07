@@ -6,34 +6,25 @@ import Nav2 from '../Nav2';
 import { dataService } from '../data/dataService';
 import BlackFridayOffer from './BlackFridayOffer';
 import CompetitionSection from './CompetitionSection';
+import { useBranch } from '../context/BranchContext';
 
 export default function Home() {
   const [offers, setOffers] = useState([]);
   const [ptPackages, setPtPackages] = useState([]);
+  const { selectedBranch } = useBranch();
 
+  // Load data when component mounts or branch changes
   useEffect(() => {
-    dataService.getOffers().then(({ data }) => {
-      if (data) setOffers(data);
-    });
+    loadData();
+  }, [selectedBranch]);
 
-    dataService.getPtPackages().then(({ data }) => {
-      if (data) setPtPackages(data);
-    });
-  }, []);
+  const loadData = async () => {
+    const offersResult = await dataService.getOffers();
+    if (offersResult.data) setOffers(offersResult.data);
 
-  function handlebook(offer) {
-    const phone = "201507817517";
-    const message = `Hello, I would like to book the ${offer.duration} offer.`;
-    const url = `https://wa.me/${phone}?text=${encodeURIComponent(message)}`;
-    window.open(url, "whatsappWindow", "width=600,height=600,top=100,left=200");
-  }
-
-  function handlePTBook(ptPackage) {
-    const phone = "201028188900";
-    const message = `Hello, I would like to book ${ptPackage.sessions} PT Sessions.`;
-    const url = `https://wa.me/${phone}?text=${encodeURIComponent(message)}`;
-    window.open(url, "whatsappWindow", "width=600,height=600,top=100,left=200");
-  }
+    const ptPackagesResult = await dataService.getPtPackages();
+    if (ptPackagesResult.data) setPtPackages(ptPackagesResult.data);
+  };
 
   const containerVariants = {
     hidden: { opacity: 0 },
@@ -159,38 +150,18 @@ export default function Home() {
                           )}
                         </div>
 
-                        {/* Features */}
+                        {/* Features - عرض كل الـ features من الداتابيس */}
                         <div className="space-y-3 mb-6 flex-1">
-                          <div className="flex items-center gap-3 text-white/90 bg-black/30 p-2 rounded-lg">
-                            <i className="fa-solid fa-dumbbell text-red-600 text-sm w-5"></i>
-                            <span className="text-sm font-medium">{offer.private} PT Sessions</span>
-                          </div>
-                          <div className="flex items-center gap-3 text-white/90 bg-black/30 p-2 rounded-lg">
-                            <i className="fa-solid fa-user-plus text-red-600 text-sm w-5"></i>
-                            <span className="text-sm font-medium">{offer.invite} Invitations</span>
-                          </div>
-                          {offer.freezing && offer.freezing !== "" && offer.freezing !== 0 && (
-                            <div className="flex items-center gap-3 text-white/90 bg-black/30 p-2 rounded-lg">
-                              <i className="fa-solid fa-snowflake text-red-600 text-sm w-5"></i>
-                              <span className="text-sm font-medium">{offer.freezing} Freezing</span>
+                          {offer.features && Array.isArray(offer.features) && offer.features.map((feature, idx) => (
+                            <div key={idx} className="flex items-center gap-3 text-white/90 bg-black/30 p-2 rounded-lg">
+                              <i className="fa-solid fa-check text-red-600 text-sm w-5"></i>
+                              <span className="text-sm font-medium">{feature}</span>
                             </div>
+                          ))}
+                          {(!offer.features || !Array.isArray(offer.features) || offer.features.length === 0) && (
+                            <div className="text-white/50 text-sm text-center">No features available</div>
                           )}
-                          <div className="flex items-center gap-3 text-white/90 bg-black/30 p-2 rounded-lg">
-                            <i className="fa-solid fa-apple-alt text-red-600 text-sm w-5"></i>
-                            <span className="text-sm font-medium">{offer.nutrition} Nutrition</span>
-                          </div>
                         </div>
-
-                        {/* Button - Wing Shape */}
-                        <motion.button
-                          onClick={() => handlebook(offer)}
-                          className="w-full py-4 bg-gradient-to-r from-red-600 to-red-700 text-white font-bold gymfont rounded-tl-3xl rounded-br-3xl hover:from-red-700 hover:to-red-800 transition-all duration-300 shadow-lg shadow-red-600/30"
-                          whileHover={{ scale: 1.02 }}
-                          whileTap={{ scale: 0.98 }}
-                        >
-                          <i className="fa-solid fa-feather-pointed mr-2"></i>
-                          BOOK NOW
-                        </motion.button>
                       </div>
                     </div>
                     

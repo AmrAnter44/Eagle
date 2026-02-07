@@ -12,36 +12,38 @@ import Cardio from './comp/Map/Cardio';
 import Weight from './comp/Map/Weight';
 import Free from './comp/Map/Free';
 import Machines from './comp/Map/Machines';
- import Map from './comp/Map';
- import Bar from './comp/Map/Bar';
- import Qooba from './comp/Qooba';
+import Map from './comp/Map';
+import Bar from './comp/Map/Bar';
+import BranchHome from './comp/BranchHome';
+import BranchPage from './comp/BranchPage';
 import { Analytics } from "@vercel/analytics/react"
 
 function App() {
   let router = createBrowserRouter([
+    // ==================== الصفحة الرئيسية - اختيار الفرع ====================
     {
       path: "/",
+      element: <BranchHome />,
+    },
+
+    // ==================== صفحات الفروع ====================
+    {
+      path: "/:branchSlug",
       element: <Layout />,
       children: [
-        { index: true, element: <Home /> },
-        { path: "/coaches", element: <Coaches /> },
-        { path: "/transformations", element: <Trans /> },
-        { path: "/classes", element: <Classes /> },
-        { path: "/map", element: <Map /> },
-        { path: "/Men", element: <Men /> },
-        { path: "/Ladies", element: <Ladies /> },
-        { path: "/Cardio", element: <Cardio /> },
-        { path: "/Free", element: <Free /> },
-        { path: "/Weight", element: <Weight /> },
-        { path: "/Machines", element: <Machines /> },
-        { path: "/bar", element: <Bar /> },
-
-        // ✅ شلنا Admin routes
+        { index: true, element: <BranchPage /> },
+        { path: "coaches", element: <Coaches /> },
+        { path: "transformations", element: <Trans /> },
+        { path: "classes", element: <Classes /> },
+        { path: "map", element: <Map /> },
+        { path: "Men", element: <Men /> },
+        { path: "Ladies", element: <Ladies /> },
+        { path: "Cardio", element: <Cardio /> },
+        { path: "Free", element: <Free /> },
+        { path: "Weight", element: <Weight /> },
+        { path: "Machines", element: <Machines /> },
+        { path: "bar", element: <Bar /> },
       ],
-    },
-    {
-      path: "/qoopa",
-      element: <Qooba />,
     },
   ]);
 

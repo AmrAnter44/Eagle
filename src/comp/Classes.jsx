@@ -1,15 +1,21 @@
 import React, { useState, useEffect } from 'react';
 import { motion } from 'framer-motion';
 import { dataService } from '../data/dataService';
+import { useBranch } from '../context/BranchContext';
 
 export default function Classes() {
   const [classes, setClasses] = useState([]);
+  const { selectedBranch } = useBranch();
 
+  // Load classes when component mounts or branch changes
   useEffect(() => {
-    dataService.getClasses().then(({ data }) => {
-      if (data) setClasses(data);
-    });
-  }, []);
+    loadClasses();
+  }, [selectedBranch]);
+
+  const loadClasses = async () => {
+    const { data } = await dataService.getClasses();
+    if (data) setClasses(data);
+  };
 
   const containerVariants = {
     hidden: { opacity: 0 },
