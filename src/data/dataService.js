@@ -154,23 +154,21 @@ class DataService {
     // Transform to match old format
     const transformed = data.map(item => ({
       id: item.id,
-      duration: item.title_en,
+      duration: item.name || 'Membership',
       // price = السعر القديم (قبل الخصم) - هيظهر مشطوب
       price: item.original_price?.toString() || item.price?.toString() || '0',
       // price_new = السعر الجديد (بعد الخصم) - هيظهر بالأحمر
       price_new: item.original_price && item.original_price > item.price
         ? item.price?.toString()  // في حالة في خصم
         : '0',  // لو مافيش خصم
-      private: this.extractPTSessions(item.features),  // عدد جلسات الـ PT
-      invite: this.extractInvitations(item.features),
-      freezing: this.extractFreezing(item.features),
-      nutrition: this.extractNutrition(item.features) || item.metadata?.nutrition_consultations?.toString() || '0',  // عدد استشارات التغذية
-      // Additional fields for compatibility
-      title_en: item.title_en,
-      title_ar: item.title_ar,
-      description_en: item.description_en,
-      description_ar: item.description_ar,
-      features: item.features,
+      private: item.pt_sessions_included?.toString() || '0',  // عدد جلسات الـ PT
+      invite: item.guest_invites?.toString() || '0',
+      freezing: item.freeze_weeks ? `${item.freeze_weeks} Weeks` : '',
+      nutrition: item.metadata?.nutrition_consultations?.toString() || '0',  // عدد استشارات التغذية
+      // Features: Only use custom features from metadata (no auto-generation)
+      features: item.metadata?.features && Array.isArray(item.metadata.features)
+        ? item.metadata.features
+        : [],
       metadata: item.metadata
     }));
 
@@ -187,17 +185,11 @@ class DataService {
     // Transform to match old format
     const transformed = data.map(item => ({
       id: item.id,
-      sessions: item.metadata?.sessions || 0,
+      sessions: item.sessions_count || 0,
       price: item.price?.toString() || '0',
       price_discount: item.original_price && item.original_price > item.price
         ? item.price?.toString()
         : '0',
-      // Additional fields for compatibility
-      title_en: item.title_en,
-      title_ar: item.title_ar,
-      description_en: item.description_en,
-      description_ar: item.description_ar,
-      features: item.features,
       metadata: item.metadata
     }));
 
@@ -214,14 +206,12 @@ class DataService {
     // Transform to match old format with image URLs
     const transformed = data.map(item => ({
       id: item.id,
-      name: item.title_en,
-      name_ar: item.title_ar,
+      name: item.name || 'Coach',
       img: getImageUrl(item.image_url),
-      title: item.description_en,
-      title_ar: item.description_ar,
+      title: item.role || 'Fitness Trainer',
       // Additional fields
-      specialization: item.metadata?.specialization,
-      experience_years: item.metadata?.experience_years
+      specialization: item.specialization || item.metadata?.specialization,
+      experience_years: item.years_experience || item.metadata?.experience_years
     }));
 
     return { data: transformed, error: null };
@@ -237,19 +227,13 @@ class DataService {
     // Transform to match old format
     const transformed = data.map(item => ({
       id: item.id,
-      classname: item.title_en,
-      classname_ar: item.title_ar,
-      day: item.schedule?.day || '',
-      day_ar: item.schedule?.day_ar || '',
-      time1: item.schedule?.time || '',
-      duration: item.schedule?.duration || '',
-      coachname: item.metadata?.coach || '',
-      mix: item.metadata?.type || 'Mixed', // 'Ladies', 'Men', 'Mixed'
-      mem: !item.metadata?.is_membership_included, // true if out of membership
-      // Additional fields
-      description_en: item.description_en,
-      description_ar: item.description_ar,
-      schedule: item.schedule,
+      classname: item.name || 'Class',
+      day: item.day_of_week || '',
+      time1: item.time || '',
+      duration: item.duration_minutes || '',
+      coachname: item.coach_name || '',
+      mix: item.class_type || 'Mixed', // 'Ladies Only', 'Mixed'
+      mem: item.booking_required || false, // true if booking required
       metadata: item.metadata
     }));
 
@@ -270,16 +254,16 @@ class DataService {
     // Transform with all details
     const transformed = data.map(item => ({
       id: item.id,
-      title_en: item.title_en,
-      title_ar: item.title_ar,
-      description_en: item.description_en,
-      description_ar: item.description_ar,
-      price: item.price,
-      original_price: item.original_price,
-      features: item.features,
+      name: item.name,
+      description: item.description,
+      discount_percentage: item.discount_percentage,
+      discount_amount: item.discount_amount,
+      valid_from: item.valid_from,
+      valid_until: item.valid_until,
+      applicable_to: item.applicable_to,
+      terms_conditions: item.terms_conditions,
+      promo_code: item.promo_code,
       offer_type: item.metadata?.offer_type,
-      valid_until: item.metadata?.valid_until,
-      duration_days: item.metadata?.duration_days,
       display_order: item.display_order
     }));
 

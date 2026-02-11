@@ -1,42 +1,35 @@
-import React, { useState, useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import { dataService } from '../data/dataService';
-import { useBranch } from '../context/BranchContext';
+import { supabase } from '../lib/supabase';
 
 export default function BlackFridayOffer() {
-  const [isVisible, setIsVisible] = useState(true);
   const [offers, setOffers] = useState([]);
-  const [currentOffer, setCurrentOffer] = useState(null);
   const [timeLeft, setTimeLeft] = useState({
     days: 0,
     hours: 0,
     minutes: 0,
     seconds: 0
   });
-  const { selectedBranch, getCurrentBranch } = useBranch();
 
-  // Load special offers when component mounts or branch changes
+  // Fetch offers from Supabase - فقط العرض الأول
   useEffect(() => {
-    loadOffers();
-  }, [selectedBranch]);
-
-  const loadOffers = async () => {
-    const { data } = await dataService.getSpecialOffers();
-    if (data && data.length > 0) {
-      setOffers(data);
-      // Get first active offer
-      const activeOffer = data.find(offer => {
-        if (!offer.valid_until) return true;
-        return new Date(offer.valid_until) > new Date();
-      });
-      setCurrentOffer(activeOffer || data[0]);
-    }
-  };
+    dataService.getSpecialOffers().then(({ data, error }) => {
+      if (error) {
+        console.error('Error loading offers:', error);
+      }
+      if (data && data.length > 0) {
+        console.log('🎁 Offers data:', data);
+        // خد أول offer بس (display_order = 1)
+        const firstOffer = data.find(offer => offer.display_order === 1) || data[0];
+        console.log('🎁 First offer:', firstOffer);
+        setOffers([firstOffer]); // حطه في array عشان الـ map
+      }
+    });
+  }, []);
 
   useEffect(() => {
-    if (!currentOffer || !currentOffer.valid_until) return;
-
     const calculateTimeLeft = () => {
-      const endDate = new Date(currentOffer.valid_until);
+      const endDate = new Date('2026-02-02T23:59:59');
       const now = new Date();
       const difference = endDate - now;
 
@@ -56,73 +49,86 @@ export default function BlackFridayOffer() {
     const timer = setInterval(calculateTimeLeft, 1000);
 
     return () => clearInterval(timer);
-  }, [currentOffer]);
+  }, []);
 
-  // Don't show if no offer or not visible
-  if (!isVisible || !currentOffer) return null;
-
-  // Extract duration numbers from features if available
-  const extractNumbers = (features) => {
-    if (!features || !Array.isArray(features)) return { months: 3, free: 2 };
-
-    // Try to find months in features
-    const monthsFeature = features.find(f => f.toLowerCase().includes('month'));
-    const freeFeature = features.find(f => f.toLowerCase().includes('free'));
-
-    const monthsMatch = monthsFeature?.match(/(\d+)/);
-    const freeMatch = freeFeature?.match(/(\d+)/);
-
-    return {
-      months: monthsMatch ? parseInt(monthsMatch[1]) : 3,
-      free: freeMatch ? parseInt(freeMatch[1]) : 2
-    };
+  const handleBook = (offer) => {
+    const phone = "201028188900";
+    const price = offer.price || offer.metadata?.price || 'N/A';
+    const message = `Hello, I would like to book: ${offer.name} for ${price} EGP`;
+    const url = `https://wa.me/${phone}?text=${encodeURIComponent(message)}`;
+    window.open(url, "whatsappWindow", "width=600,height=600,top=100,left=200");
   };
 
-  const { months, free } = extractNumbers(currentOffer.features);
+  // Helper function لتحويل relative path لـ full Supabase Storage URL
+  const getImageUrl = (imagePath) => {
+    if (!imagePath) return null;
+    if (imagePath.startsWith('http')) return imagePath;
+
+    const { data } = supabase.storage
+      .from('gym-media')
+      .getPublicUrl(imagePath);
+
+    return data.publicUrl;
+  };
+
+  // لو مفيش offers، السيكشن يختفي تماماً
+  if (offers.length === 0) {
+    return null;
+  }
 
   return (
     <section className='relative w-full py-8 px-4 overflow-hidden'>
       {/* Background */}
-      <div className="absolute inset-0 bg-gradient-to-br from-red-700/20 via-gray-900/30 to-black/50"></div>
-      
-      {/* Close Button */}
-      <button
-        onClick={() => setIsVisible(false)}
-        className="absolute top-2 right-2 z-20 w-7 h-7 bg-white/10 hover:bg-white/20 rounded-full flex items-center justify-center transition-all duration-300"
-      >
-        <i className="fas fa-times text-white text-xs"></i>
-      </button>
+      <div className="absolute inset-0 bg-gradient-to-br from-red-600/20 via-gray-900/30 to-black/50"></div>
 
-      <div className="relative z-10 max-w-5xl mx-auto">
-        <div className="bg-gradient-to-r from-red-900/40 via-gray-900/50 to-black/60 backdrop-blur-sm border-2 border-red-500/30 rounded-2xl p-8 flex flex-col md:flex-row items-center justify-between gap-6">
+      <div className="relative z-10 max-w-7xl mx-auto space-y-4">
+        {offers.map((offer, index) => {
+          const metadata = typeof offer.metadata === 'string'
+            ? JSON.parse(offer.metadata)
+            : (offer.metadata || {});
 
-          {/* Badge */}
-          <div>
-            <span className="inline-block px-4 py-1 bg-gradient-to-r from-red-500 to-red-700 text-white text-sm font-bold rounded-full uppercase mb-4">
-              {currentOffer.offer_type?.replace('_', ' ') || 'SPECIAL OFFER'}
-            </span>
-          </div>
+          return (
+            <div key={offer.id} className="bg-gradient-to-r from-red-900/40 via-gray-900/50 to-black/60 backdrop-blur-sm border-2 border-red-500/30 rounded-2xl p-6 flex flex-col md:flex-row items-center justify-between gap-6">
 
-          {/* Title */}
-          <div className="flex-1 text-center">
-            <h3 className="text-3xl md:text-4xl font-bold text-white gymfont">
-              {currentOffer.title_en}
-            </h3>
-          </div>
+              {/* Badge */}
+              <div>
+                <span className="inline-block px-4 py-1 bg-gradient-to-r from-red-500 to-red-600 text-white text-sm font-bold rounded-full">
+                  {offer.discount_percentage ? `${offer.discount_percentage}% OFF` : 'Special Offer'}
+                </span>
+              </div>
 
-          {/* Price */}
-          <div className="flex flex-col items-center">
-            {currentOffer.original_price && currentOffer.original_price > currentOffer.price && (
-              <span className="text-2xl text-gray-400 line-through gymfont">
-                {currentOffer.original_price}
-              </span>
-            )}
-            <div className="flex items-center gap-2">
-              <span className="text-5xl font-bold text-white gymfont">{currentOffer.price}</span>
-              <span className="text-xl font-bold text-red-400">EGP</span>
+              {/* Offer Title/Description */}
+              <div className="flex items-center gap-4">
+                <div className="text-center">
+                  <div className="text-3xl md:text-4xl font-bold text-white gymfont">
+                    {offer.name}
+                  </div>
+                  {offer.description && (
+                    <div className="text-sm text-red-400 mt-1">{offer.description}</div>
+                  )}
+                </div>
+              </div>
+
+              {/* Price - يختفي لو السعر = 0 */}
+              {(offer.price && parseFloat(offer.price) !== 0) || (metadata.price && parseFloat(metadata.price) !== 0) ? (
+                <div className="flex items-center gap-2">
+                  <span className="text-5xl font-bold text-white gymfont">
+                    {offer.price || metadata.price || 'N/A'}
+                  </span>
+                  <span className="text-xl font-bold text-red-400">EGP</span>
+                </div>
+              ) : null}
+
+              {/* Button */}
+              <button
+                onClick={() => handleBook(offer)}
+                className='px-8 py-3 bg-gradient-to-r from-red-600 to-red-500 text-white rounded-xl hover:from-red-500 hover:to-red-400 transition-all duration-300 font-bold transform hover:scale-105 active:scale-95'
+              >
+                Book Now
+              </button>
             </div>
-          </div>
-        </div>
+          );
+        })}
       </div>
     </section>
   );

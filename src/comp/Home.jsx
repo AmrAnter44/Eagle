@@ -12,6 +12,24 @@ export default function Home() {
   const [ptPackages, setPtPackages] = useState([]);
   const { selectedBranch } = useBranch();
 
+  // Get icon based on feature text
+  function getFeatureIcon(feature) {
+    const text = feature.toLowerCase();
+    if (text.includes('pt') || text.includes('personal') || text.includes('training')) return 'fa-dumbbell';
+    if (text.includes('inbody') || text.includes('scan')) return 'fa-weight-scale';
+    if (text.includes('guest') || text.includes('invite')) return 'fa-user-plus';
+    if (text.includes('freez')) return 'fa-snowflake';
+    if (text.includes('class')) return 'fa-users';
+    if (text.includes('vip') || text.includes('locker')) return 'fa-key';
+    if (text.includes('spa') || text.includes('sauna')) return 'fa-spa';
+    if (text.includes('pool') || text.includes('swim')) return 'fa-water-ladder';
+    if (text.includes('nutrition') || text.includes('diet')) return 'fa-apple-whole';
+    if (text.includes('24/7') || text.includes('access')) return 'fa-clock';
+    if (text.includes('massage')) return 'fa-hand-sparkles';
+    if (text.includes('supplement')) return 'fa-pills';
+    return 'fa-check';
+  }
+
   // Load data when component mounts or branch changes
   useEffect(() => {
     loadData();
@@ -153,16 +171,19 @@ export default function Home() {
                           )}
                         </div>
 
-                        {/* Features - عرض كل الـ features من الداتابيس */}
+                        {/* Features - Custom features with smart icons */}
                         <div className="space-y-3 mb-6 flex-1">
-                          {offer.features && Array.isArray(offer.features) && offer.features.map((feature, idx) => (
-                            <div key={idx} className="flex items-center gap-3 text-white/90 bg-black/30 p-2 rounded-lg">
-                              <i className="fa-solid fa-check text-red-600 text-sm w-5"></i>
-                              <span className="text-sm font-medium">{feature}</span>
+                          {offer.features && Array.isArray(offer.features) && offer.features.length > 0 ? (
+                            offer.features.map((feature, idx) => (
+                              <div key={idx} className="flex items-center gap-3 text-white/90 bg-black/30 p-2 rounded-lg hover:bg-black/40 transition-colors">
+                                <i className={`fa-solid ${getFeatureIcon(feature)} text-red-600 text-sm w-5`}></i>
+                                <span className="text-sm font-medium">{feature}</span>
+                              </div>
+                            ))
+                          ) : (
+                            <div className="text-white/40 text-xs text-center py-4">
+                              Add custom features in metadata
                             </div>
-                          ))}
-                          {(!offer.features || !Array.isArray(offer.features) || offer.features.length === 0) && (
-                            <div className="text-white/50 text-sm text-center">No features available</div>
                           )}
                         </div>
                       </div>
